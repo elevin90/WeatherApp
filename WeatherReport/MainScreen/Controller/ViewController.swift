@@ -9,8 +9,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let viewModel: MainScreenViewModelProtocol = MainScreenViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.fetchOneCallWeather { result in
+            print(result)
+        }
     }
 }
 
