@@ -19,9 +19,9 @@ enum RequestError: Error {
 
 class WeatherRequest {
     private let baseURL = "https://api.openweathermap.org/data/2.5/"
-    private let endPoint: String
     private let timeInterval: Double = 30
     let method: APIMethod
+    let endPoint: String
     private var task: URLSessionDataTask?
     
     init(endPoint: String, method: APIMethod) {
@@ -34,11 +34,6 @@ class WeatherRequest {
         urlComponents.scheme = "https"
         urlComponents.host = "api.openweathermap.org"
         urlComponents.path = endPoint
-        urlComponents.queryItems = [
-            URLQueryItem(name: "lat", value: "33.44"),
-            URLQueryItem(name: "lon", value: "-94.04"),
-            URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
-        ]
         return urlComponents
     }
     
@@ -63,21 +58,6 @@ class WeatherRequest {
 
 //MARK: Prepare request components
 extension WeatherRequest {
-//    func executeRequest()  {
-//        do {
-//            var request = try prepareURLRequest()
-//            request.allHTTPHeaderFields = self.prepareHeaders()
-//            request.httpMethod = self.method.rawValue
-//            let session = URLSession.shared
-//            session.dataTask(with: request) { data, response, error in
-//
-//            }
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//
-//    }
-    
     private func queryParameters(_ parameters: [String: Any]) -> String {
         var query = ""
         parameters.forEach {key, value in

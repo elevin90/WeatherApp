@@ -22,20 +22,24 @@ final class  OneCallRequest: WeatherRequest {
     }()
     
     init() {
-        super.init(endPoint: "/data/2.5/onecall", method: .get)
+        let endPoint = "/data/2.5/onecall"
+        super.init(endPoint: endPoint,
+                   method: .get)
     }
     
     override func prepareURLComponents() -> URLComponents {
-        return super.prepareURLComponents()
+        var urlComponents = super.prepareURLComponents()
+        urlComponents.queryItems = [
+            URLQueryItem(name: "lat", value: "33.44"),
+            URLQueryItem(name: "lon", value: "-94.04"),
+            URLQueryItem(name: "exclude", value: "hourly,daily,minutely,hourly"),
+            URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
+        ]
+        return urlComponents
     }
     
     override func prepareParameters() -> [String : Any] {
-        let latitutde = "lat"
-        let longtitude = "lon"
-        let apiKey = "appid"
-        return [latitutde: "33.44",
-                longtitude: "-94.04",
-                apiKey: "dfb922ad45c3a804ffd35ac0a5c94587"]
+        return super.prepareParameters()
     }
     
     override func prepareHeaders() -> [String : String]? {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-typealias OneCallWeatherHandler = (Result<Bool, Error>) -> Void
+typealias OneCallWeatherHandler = (Result<WeatherResponse, Error>) -> Void
 
 class WeatherService {
     
@@ -23,13 +23,19 @@ class WeatherService {
             return
         }
         let urlSession = URLSession.shared
-        urlSession.dataTask(with: request) { data, response, error in
+        urlSession.dataTask(with: request) {data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            completion(.success(true))
+            guard let data = data else { return }
+            do {
+                let weather = try JSONDecoder().decode(WeatherResponse.self, from: data)
+                completion(.success(weather))
+            } catch {
+                debugPrint(error.localizedDescription)
+                completion(.failure(error))
+            }
         }.resume()
     }
-    
 }
