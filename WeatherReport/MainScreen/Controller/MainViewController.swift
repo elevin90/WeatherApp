@@ -7,12 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
 
     let viewModel: MainScreenViewModelProtocol = MainScreenViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .green
         viewModel.fetchOneCallWeather { result in
             print(result)
         }
