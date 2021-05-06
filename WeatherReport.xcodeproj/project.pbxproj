@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60172CA72643E1A3005E10B0 /* Placemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60172CA62643E1A3005E10B0 /* Placemark.swift */; };
+		608523DD26413F9A007FAD31 /* CurrentLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608523DC26413F9A007FAD31 /* CurrentLocationService.swift */; };
 		60A9E4DE263DAEAF005C2D70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E4DD263DAEAF005C2D70 /* AppDelegate.swift */; };
 		60A9E4E0263DAEAF005C2D70 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E4DF263DAEAF005C2D70 /* SceneDelegate.swift */; };
 		60A9E4E2263DAEAF005C2D70 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E4E1263DAEAF005C2D70 /* MainViewController.swift */; };
@@ -21,6 +23,8 @@
 		60A9E523263EA454005C2D70 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E522263EA454005C2D70 /* Weather.swift */; };
 		60A9E527263EA633005C2D70 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E526263EA633005C2D70 /* CurrentWeather.swift */; };
 		60A9E529263EAA7C005C2D70 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A9E528263EAA7C005C2D70 /* WeatherResponse.swift */; };
+		60EFA1252644774B00A1E072 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60EFA1242644774B00A1E072 /* CoreLocation.framework */; };
+		60EFA1272644782000A1E072 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EFA1262644782000A1E072 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60172CA62643E1A3005E10B0 /* Placemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placemark.swift; sourceTree = "<group>"; };
+		608523DC26413F9A007FAD31 /* CurrentLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationService.swift; sourceTree = "<group>"; };
 		60A9E4DA263DAEAF005C2D70 /* WeatherReport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherReport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60A9E4DD263DAEAF005C2D70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60A9E4DF263DAEAF005C2D70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +67,8 @@
 		60A9E522263EA454005C2D70 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		60A9E526263EA633005C2D70 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
 		60A9E528263EAA7C005C2D70 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
+		60EFA1242644774B00A1E072 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		60EFA1262644782000A1E072 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60EFA1252644774B00A1E072 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +97,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		608523DB26413F7E007FAD31 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				608523DC26413F9A007FAD31 /* CurrentLocationService.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		60A9E4D1263DAEAF005C2D70 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +112,7 @@
 				60A9E4F3263DAEB0005C2D70 /* WeatherReportTests */,
 				60A9E4FE263DAEB0005C2D70 /* WeatherReportUITests */,
 				60A9E4DB263DAEAF005C2D70 /* Products */,
+				60EFA1232644774B00A1E072 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +129,7 @@
 		60A9E4DC263DAEAF005C2D70 /* WeatherReport */ = {
 			isa = PBXGroup;
 			children = (
+				608523DB26413F7E007FAD31 /* Location */,
 				60A9E521263E92DE005C2D70 /* Models */,
 				60A9E51C263E8B1E005C2D70 /* MainScreen */,
 				60A9E50E263DE20B005C2D70 /* API */,
@@ -214,8 +233,18 @@
 				60A9E522263EA454005C2D70 /* Weather.swift */,
 				60A9E526263EA633005C2D70 /* CurrentWeather.swift */,
 				60A9E528263EAA7C005C2D70 /* WeatherResponse.swift */,
+				60172CA62643E1A3005E10B0 /* Placemark.swift */,
+				60EFA1262644782000A1E072 /* Location.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		60EFA1232644774B00A1E072 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				60EFA1242644774B00A1E072 /* CoreLocation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +380,9 @@
 				60A9E529263EAA7C005C2D70 /* WeatherResponse.swift in Sources */,
 				60A9E527263EA633005C2D70 /* CurrentWeather.swift in Sources */,
 				60A9E4E2263DAEAF005C2D70 /* MainViewController.swift in Sources */,
+				608523DD26413F9A007FAD31 /* CurrentLocationService.swift in Sources */,
+				60172CA72643E1A3005E10B0 /* Placemark.swift in Sources */,
+				60EFA1272644782000A1E072 /* Location.swift in Sources */,
 				60A9E520263E8B4A005C2D70 /* MainScreenViewModel.swift in Sources */,
 				60A9E4DE263DAEAF005C2D70 /* AppDelegate.swift in Sources */,
 				60A9E510263DE230005C2D70 /* OneCallRequest.swift in Sources */,
@@ -531,7 +563,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evgenyLevin.WeatherReport.WeatherReport;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evgenyLevin.WeatherReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -550,7 +582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evgenyLevin.WeatherReport.WeatherReport;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evgenyLevin.WeatherReport;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -6,24 +6,39 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol MainScreenViewModelProtocol {
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler)
 }
 
 class MainScreenViewModel {
-    private let weatherService = WeatherService()
+    private let locationService = CurrentLocationService()
+    private var weatherService: WeatherService?
+    
+    init() {
+        
+    }
+}
+
+private extension MainScreenViewModel {
+    private func setupCityFromPlacemark(_ placemark: CLPlacemark) {
+        
+    }
 }
 
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler) {
-        weatherService.getOneCallWeather { result in
-            switch result {
-            case .success(let weather):
-                print(weather.currentWeather)
-            case .failure(let error):
-                print(error.localizedDescription)
+        locationService.updateHandler = {[weak self] location, placemark in
+            self?.weatherService = WeatherService(request: OneCallRequest(location: location))
+            self?.weatherService?.getOneCallWeather() { result in
+                switch result {
+                case .success(let weather):
+                    print(weather.currentWeather)
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }

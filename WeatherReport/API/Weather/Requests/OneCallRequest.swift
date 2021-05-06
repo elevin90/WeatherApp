@@ -21,7 +21,10 @@ final class  OneCallRequest: WeatherRequest {
         }
     }()
     
-    init() {
+    private let location: Location
+    
+    init(location: Location) {
+        self.location = location
         let endPoint = "/data/2.5/onecall"
         super.init(endPoint: endPoint,
                    method: .get)
@@ -30,8 +33,8 @@ final class  OneCallRequest: WeatherRequest {
     override func prepareURLComponents() -> URLComponents {
         var urlComponents = super.prepareURLComponents()
         urlComponents.queryItems = [
-            URLQueryItem(name: "lat", value: "33.44"),
-            URLQueryItem(name: "lon", value: "-94.04"),
+            URLQueryItem(name: "lat", value: location.latitudeString),
+            URLQueryItem(name: "lon", value: location.longtitudeString),
             URLQueryItem(name: "exclude", value: "hourly,daily,minutely,hourly"),
             URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
         ]

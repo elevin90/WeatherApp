@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Allow arbitrary loads</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow to follow your location</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

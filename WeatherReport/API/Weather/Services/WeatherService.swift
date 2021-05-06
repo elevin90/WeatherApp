@@ -6,19 +6,19 @@
 //
 
 import Foundation
+import CoreLocation
 
 typealias OneCallWeatherHandler = (Result<WeatherResponse, Error>) -> Void
 
 class WeatherService {
+    private let request: OneCallRequest
     
-    private let oneCallRequest: OneCallRequest
-    
-    init() {
-        oneCallRequest = OneCallRequest()
+    init(request: OneCallRequest) {
+        self.request = request
     }
     
     func getOneCallWeather(completion: @escaping OneCallWeatherHandler) {
-        guard let request = oneCallRequest.request else {
+        guard let request = request.request else {
             completion(.failure(RequestError.invalidURL))
             return
         }
