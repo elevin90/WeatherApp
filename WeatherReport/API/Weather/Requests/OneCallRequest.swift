@@ -40,12 +40,4 @@ final class  OneCallRequest: WeatherRequest {
         ]
         return urlComponents
     }
-    
-    override func prepareParameters() -> [String : Any] {
-        return super.prepareParameters()
-    }
-    
-    override func prepareHeaders() -> [String : String]? {
-        return nil
-    }
 }

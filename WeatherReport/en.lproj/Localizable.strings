@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  WeatherReport
+
+  Created by AP Yauheni Levin on 8.05.21.
+  
+*/
+
+"Current" = "Current";
+"Saved" = "Saved";
+"Settings" = "Settings";

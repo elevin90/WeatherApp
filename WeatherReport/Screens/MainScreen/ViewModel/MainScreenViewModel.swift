@@ -15,10 +15,6 @@ protocol MainScreenViewModelProtocol {
 class MainScreenViewModel {
     private let locationService = CurrentLocationService()
     private var weatherService: WeatherService?
-    
-    init() {
-        
-    }
 }
 
 private extension MainScreenViewModel {
@@ -26,7 +22,6 @@ private extension MainScreenViewModel {
         
     }
 }
-
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler) {

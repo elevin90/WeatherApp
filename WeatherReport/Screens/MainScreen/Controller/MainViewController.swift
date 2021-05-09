@@ -13,10 +13,11 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
-        viewModel.fetchOneCallWeather { result in
-            print(result)
-        }
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        view.backgroundColor = UIColor.mainBackground
+//        viewModel.fetchOneCallWeather { result in
+//            print(result)
+//        }
     }
 }
 
