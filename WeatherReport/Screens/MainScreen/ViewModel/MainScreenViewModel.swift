@@ -12,7 +12,7 @@ protocol MainScreenViewModelProtocol {
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler)
 }
 
-class MainScreenViewModel {
+final class MainScreenViewModel {
     private let locationService = CurrentLocationService()
     private var weatherService: WeatherService?
 }
