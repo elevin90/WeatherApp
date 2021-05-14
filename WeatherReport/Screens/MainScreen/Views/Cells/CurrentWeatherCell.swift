@@ -80,6 +80,6 @@ private extension CurrentWeatherCell {
 
 extension CurrentWeatherCell: CurrentWeatherCellFetching {
     func fetch(with viewModel: CurrentWeatherCellViewModel) {
-        
+
     }
 }

@@ -13,7 +13,7 @@ class CurrentLocationService: NSObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     private var previousLocation: CLLocation?
-    var updateHandler: ((Location, CLPlacemark) -> Void)?
+    var updateHandler: ((Location, Placemark) -> Void)?
     
     override init() {
         super.init()
@@ -60,9 +60,12 @@ class CurrentLocationService: NSObject, CLLocationManagerDelegate {
     
     private func reverseGeocode(from location: CLLocation) {
         geocoder.reverseGeocodeLocation(location, preferredLocale: Locale.current) {[weak self] placemarks, error in
-            if let placemark = placemarks?.first {
+            if let currentPlacemrk = placemarks?.first {
                 let coordinatesLocation = Location(latitude: location.coordinate.latitude,
                                         longtitude: location.coordinate.longitude)
+                let placemark = Placemark(country: currentPlacemrk.country ?? "",
+                                          city: currentPlacemrk.locality ?? "",
+                                          street: currentPlacemrk.thoroughfare ?? "")
                 self?.updateHandler?(coordinatesLocation, placemark)
                 self?.previousLocation = location
             }

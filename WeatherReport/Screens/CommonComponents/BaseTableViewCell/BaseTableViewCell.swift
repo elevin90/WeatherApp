@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseTableViewCell: UITableViewCell {
+public class BaseTableViewCell: UITableViewCell, NibLoadableView {
     static var identifier: String {
         return String(describing: self)
     }

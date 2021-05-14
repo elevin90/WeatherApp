@@ -9,30 +9,39 @@ import Foundation
 import CoreLocation
 
 protocol MainScreenViewModelProtocol {
+    var viewModels: [CellViewModeling] { get }
+    var updateHadler: (() -> Void)? { get set}
+    var errorHandler: ((Error?) -> Void)? { get set}
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler)
 }
 
 final class MainScreenViewModel {
     private let locationService = CurrentLocationService()
     private var weatherService: WeatherService?
+    var viewModels: [CellViewModeling] = []
+    var updateHadler: (() -> Void)?
+    var errorHandler: ((Error?) -> Void)?
 }
 
 private extension MainScreenViewModel {
-    private func setupCityFromPlacemark(_ placemark: CLPlacemark) {
-        
+    private func setupCurrentLocationViewModel(from placemark: Placemark) {
+        let currentLocationViewModel = CurrentLocationViewModel(placemark: placemark)
+        viewModels.append(currentLocationViewModel)
+        updateHadler?()
     }
 }
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler) {
         locationService.updateHandler = {[weak self] location, placemark in
+            self?.setupCurrentLocationViewModel(from: placemark)
             self?.weatherService = WeatherService(request: OneCallRequest(location: location))
             self?.weatherService?.getOneCallWeather() { result in
                 switch result {
                 case .success(let weather):
                     print(weather.currentWeather)
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self?.errorHandler?(error)
                 }
             }
         }

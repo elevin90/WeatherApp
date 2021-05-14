@@ -24,7 +24,13 @@ struct WeatherAdditionalDetials {
     let uvi: Double
 }
 
-struct CurrentWeatherCellViewModel {
+class CurrentWeatherCellViewModel: CellViewModeling {
     let weather: WeatherDetails
     let additional: WeatherAdditionalDetials
+    let reusableIdentifier: String = CurrentWeatherCell.identifier
+    
+    init(weather: WeatherDetails, additional: WeatherAdditionalDetials) {
+        self.weather = weather
+        self.additional = additional
+    }
 }

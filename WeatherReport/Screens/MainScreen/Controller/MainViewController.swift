@@ -15,6 +15,9 @@ final class MainViewController: BaseViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+        tableView.register(CurrentLocationCell.self)
         tableView.delegate = self
         return tableView
     }()
