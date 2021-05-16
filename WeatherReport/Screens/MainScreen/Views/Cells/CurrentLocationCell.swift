@@ -8,14 +8,15 @@
 import UIKit
 
 protocol CurrentLocationCellFetching {
-    func fetch(with viewModel: CurrentLocationViewModel)
+    func fetch(with viewModel: CellViewModeling)
 }
 
 class CurrentLocationCell: BaseTableViewCell {
     private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        let font = UIFont.appFont(type: .medium, size: 22)
+        let font = UIFont.appFont(type: .medium, size: 32)
+        label.font = font
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -24,11 +25,13 @@ class CurrentLocationCell: BaseTableViewCell {
         let label = UILabel()
         label.textColor = UIColor.white.withAlphaComponent(0.6)
         let font = UIFont.appFont(type: .regular, size: 14)
+        label.font = font
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override func setup() {
+        backgroundColor = .clear
         setupCityLabel()
         setupCurrentDateLabel()
     }
@@ -56,7 +59,8 @@ private extension CurrentLocationCell {
 }
 
 extension CurrentLocationCell: CurrentLocationCellFetching {
-    func fetch(with viewModel: CurrentLocationViewModel) {
+    func fetch(with viewModel: CellViewModeling) {
+        guard let viewModel = viewModel as? CurrentLocationViewModel else { return }
         cityLabel.text = viewModel.placemark.city
         currentDateLabel.text = viewModel.dateString
     }

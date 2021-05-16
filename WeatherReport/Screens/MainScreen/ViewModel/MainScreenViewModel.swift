@@ -8,8 +8,8 @@
 import Foundation
 import CoreLocation
 
-protocol MainScreenViewModelProtocol {
-    var viewModels: [CellViewModeling] { get }
+protocol MainScreenViewModelProtocol: AnyObject {
+    var cellViewModels: [CellViewModeling] { get }
     var updateHadler: (() -> Void)? { get set}
     var errorHandler: ((Error?) -> Void)? { get set}
     func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler)
@@ -18,7 +18,7 @@ protocol MainScreenViewModelProtocol {
 final class MainScreenViewModel {
     private let locationService = CurrentLocationService()
     private var weatherService: WeatherService?
-    var viewModels: [CellViewModeling] = []
+    var cellViewModels: [CellViewModeling] = []
     var updateHadler: (() -> Void)?
     var errorHandler: ((Error?) -> Void)?
 }
@@ -26,7 +26,7 @@ final class MainScreenViewModel {
 private extension MainScreenViewModel {
     private func setupCurrentLocationViewModel(from placemark: Placemark) {
         let currentLocationViewModel = CurrentLocationViewModel(placemark: placemark)
-        viewModels.append(currentLocationViewModel)
+        cellViewModels.append(currentLocationViewModel)
         updateHadler?()
     }
 }
