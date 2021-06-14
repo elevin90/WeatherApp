@@ -20,7 +20,7 @@ class CurrentLocationViewModel: CellViewModeling {
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .none
         dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateStyle = .long
+        dateFormatter.dateFormat = "EEEE, MMM d"
         let dateString = dateFormatter.string(from: currentDate)
         return dateString
     }()

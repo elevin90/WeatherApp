@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class  OneCallRequest: WeatherRequest {
+final class OneCallRequest: WeatherRequest {
     
     lazy var request: URLRequest? = {
         do {
@@ -32,10 +32,12 @@ final class  OneCallRequest: WeatherRequest {
     
     override func prepareURLComponents() -> URLComponents {
         var urlComponents = super.prepareURLComponents()
+        let locale = Locale.current
         urlComponents.queryItems = [
             URLQueryItem(name: "lat", value: location.latitudeString),
             URLQueryItem(name: "lon", value: location.longtitudeString),
             URLQueryItem(name: "exclude", value: "hourly,daily,minutely,hourly"),
+            URLQueryItem(name: "units", value: locale.usesMetricSystem ? "metric" : "imperial"),
             URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
         ]
         return urlComponents

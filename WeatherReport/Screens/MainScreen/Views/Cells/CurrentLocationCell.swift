@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CurrentLocationCellFetching {
+protocol TableCellFetching: UITableViewCell {
     func fetch(with viewModel: CellViewModeling)
 }
 
@@ -58,7 +58,7 @@ private extension CurrentLocationCell {
     }
 }
 
-extension CurrentLocationCell: CurrentLocationCellFetching {
+extension CurrentLocationCell: TableCellFetching {
     func fetch(with viewModel: CellViewModeling) {
         guard let viewModel = viewModel as? CurrentLocationViewModel else { return }
         cityLabel.text = viewModel.placemark.city

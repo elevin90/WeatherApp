@@ -13,6 +13,8 @@ struct WeatherDetails {
     let clouds: Double
     let windSpeed: Double
     let windDeg: Double
+    let description: String
+    let state: String
 }
 
 struct WeatherAdditionalDetials {

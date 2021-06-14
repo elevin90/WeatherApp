@@ -20,6 +20,8 @@ final class MainViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.register(CurrentLocationCell.self,
                            forCellReuseIdentifier: CurrentLocationCell.identifier)
+        tableView.register(CurrentWeatherCell.self,
+                           forCellReuseIdentifier: CurrentWeatherCell.identifier)
         tableView.delegate = self
         return tableView
     }()
@@ -33,7 +35,7 @@ final class MainViewController: BaseViewController {
             }
         }
         
-        viewModel.fetchOneCallWeather { result in
+        viewModel.startUpdating { result in
             DispatchQueue.main.async {[weak self] in
                 self?.tableView.reloadData()
             }
@@ -61,9 +63,9 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = viewModel.cellViewModels[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: model.reusableIdentifier,
-                                                 for: indexPath)
-        (cell as? CurrentLocationCell)?.fetch(with: model)
-        return cell
+                                                 for: indexPath) as? TableCellFetching
+        cell?.fetch(with: model)
+        return cell ?? UITableViewCell()
     }
 }
 

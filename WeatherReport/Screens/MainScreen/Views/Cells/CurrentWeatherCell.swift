@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol CurrentWeatherCellFetching {
-    func fetch(with viewModel: CurrentWeatherCellViewModel)
-}
-
 final class CurrentWeatherCell: BaseTableViewCell {
     private lazy var weatherImageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,7 +25,7 @@ final class CurrentWeatherCell: BaseTableViewCell {
     private lazy var degreesLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        let font = UIFont.appFont(type: .regular, size: 32)
+        let font = UIFont.appFont(type: .medium, size: 32)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -37,6 +33,7 @@ final class CurrentWeatherCell: BaseTableViewCell {
     private lazy var conditionsLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.numberOfLines = 0
         let font = UIFont.appFont(type: .regular, size: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -44,27 +41,17 @@ final class CurrentWeatherCell: BaseTableViewCell {
     
     override func setup() {
         super.setup()
-        setupCityLabel()
+        backgroundColor = .clear
         setupDegreesLabel()
         setupConditionsLabel()
     }
 }
 
 private extension CurrentWeatherCell {
-    private func setupCityLabel() {
-        addSubview(cityLabel)
-        NSLayoutConstraint.activate([
-            cityLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            cityLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
-            cityLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -50),
-        ])
-    }
-
-    
     private func setupDegreesLabel() {
         addSubview(degreesLabel)
         NSLayoutConstraint.activate([
-            degreesLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 6),
+            degreesLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
             degreesLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12)
         ])
     }
@@ -72,14 +59,18 @@ private extension CurrentWeatherCell {
     private func setupConditionsLabel() {
         addSubview(conditionsLabel)
         NSLayoutConstraint.activate([
-            conditionsLabel.topAnchor.constraint(equalTo: degreesLabel.bottomAnchor, constant: 6),
-            conditionsLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12)
+            conditionsLabel.topAnchor.constraint(equalTo: degreesLabel.bottomAnchor, constant: 4),
+            conditionsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 12),
+            conditionsLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            conditionsLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -12)
         ])
     }
 }
 
-extension CurrentWeatherCell: CurrentWeatherCellFetching {
-    func fetch(with viewModel: CurrentWeatherCellViewModel) {
-
+extension CurrentWeatherCell: TableCellFetching {
+    func fetch(with viewModel: CellViewModeling) {
+        guard let viewModel = viewModel as? CurrentWeatherCellViewModel else { return }
+        degreesLabel.text = "\(viewModel.weather.temperature)"
+        conditionsLabel.text = "\(viewModel.weather.description)"
     }
 }

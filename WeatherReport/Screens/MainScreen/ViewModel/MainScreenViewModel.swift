@@ -12,7 +12,7 @@ protocol MainScreenViewModelProtocol: AnyObject {
     var cellViewModels: [CellViewModeling] { get }
     var updateHadler: (() -> Void)? { get set}
     var errorHandler: ((Error?) -> Void)? { get set}
-    func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler)
+    func startUpdating(handler: @escaping OneCallWeatherHandler)
 }
 
 final class MainScreenViewModel {
@@ -29,20 +29,32 @@ private extension MainScreenViewModel {
         cellViewModels.append(currentLocationViewModel)
         updateHadler?()
     }
+    
+    private func setupWeatherCellViewModel(from response: WeatherResponse) {
+        let currentWeather = response.currentWeather
+        let weatherCellViewModel = WeatherCellViewModelBuilder(currentWeather:
+                                                                currentWeather).create()
+        cellViewModels.append(weatherCellViewModel)
+        updateHadler?()
+    }
 }
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
-    func fetchOneCallWeather(handler: @escaping OneCallWeatherHandler) {
+    func startUpdating(handler: @escaping OneCallWeatherHandler) {
         locationService.updateHandler = {[weak self] location, placemark in
             self?.setupCurrentLocationViewModel(from: placemark)
-            self?.weatherService = WeatherService(request: OneCallRequest(location: location))
-            self?.weatherService?.getOneCallWeather() { result in
-                switch result {
-                case .success(let weather):
-                    print(weather.currentWeather)
-                case .failure(let error):
-                    self?.errorHandler?(error)
-                }
+            self?.fetchOneCallWeather(location: location, handler: handler)
+        }
+    }
+    
+    private func fetchOneCallWeather(location: Location, handler: @escaping OneCallWeatherHandler) {
+        weatherService = WeatherService(request: OneCallRequest(location: location))
+        weatherService?.getOneCallWeather() {[weak self] result in
+            switch result {
+            case .success(let response):
+                self?.setupWeatherCellViewModel(from: response)
+            case .failure(let error):
+                self?.errorHandler?(error)
             }
         }
     }
