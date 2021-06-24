@@ -26,10 +26,18 @@ struct WeatherAdditionalDetials {
     let uvi: Double
 }
 
-class CurrentWeatherCellViewModel: CellViewModeling {
+final class CurrentWeatherCellViewModel: CellViewModeling {
     let weather: WeatherDetails
     let additional: WeatherAdditionalDetials
     let reusableIdentifier: String = CurrentWeatherCell.identifier
+    
+    var conditions: String {
+        weather.description
+    }
+    
+    var temperature: Int {
+        Int(weather.temperature)
+    }
     
     init(weather: WeatherDetails, additional: WeatherAdditionalDetials) {
         self.weather = weather

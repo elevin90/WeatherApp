@@ -34,7 +34,6 @@ final class MainViewController: BaseViewController {
                 self?.tableView.reloadData()
             }
         }
-        
         viewModel.startUpdating { result in
             DispatchQueue.main.async {[weak self] in
                 self?.tableView.reloadData()

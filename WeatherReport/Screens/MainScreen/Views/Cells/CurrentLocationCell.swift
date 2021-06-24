@@ -11,7 +11,7 @@ protocol TableCellFetching: UITableViewCell {
     func fetch(with viewModel: CellViewModeling)
 }
 
-class CurrentLocationCell: BaseTableViewCell {
+final class CurrentLocationCell: BaseTableViewCell {
     private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white

@@ -38,6 +38,7 @@ final class OneCallRequest: WeatherRequest {
             URLQueryItem(name: "lon", value: location.longtitudeString),
             URLQueryItem(name: "exclude", value: "hourly,daily,minutely,hourly"),
             URLQueryItem(name: "units", value: locale.usesMetricSystem ? "metric" : "imperial"),
+            URLQueryItem(name: "lang", value: locale.languageCode),
             URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
         ]
         return urlComponents

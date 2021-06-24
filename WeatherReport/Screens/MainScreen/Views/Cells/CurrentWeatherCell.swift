@@ -70,7 +70,7 @@ private extension CurrentWeatherCell {
 extension CurrentWeatherCell: TableCellFetching {
     func fetch(with viewModel: CellViewModeling) {
         guard let viewModel = viewModel as? CurrentWeatherCellViewModel else { return }
-        degreesLabel.text = "\(viewModel.weather.temperature)"
-        conditionsLabel.text = "\(viewModel.weather.description)"
+        degreesLabel.text = "\(viewModel.temperature)".appending("°")
+        conditionsLabel.text = viewModel.conditions
     }
 }
