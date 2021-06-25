@@ -37,6 +37,19 @@ private extension MainScreenViewModel {
         cellViewModels.append(weatherCellViewModel)
         updateHadler?()
     }
+    
+    private func setupStackCellViewModel(from response: WeatherResponse) {
+        let currentWeather = response.currentWeather
+        let humidityItem = WeatherDetialsStackItem(viewType: .humidity,
+                                                   value: "\(currentWeather.humidity)")
+        let barometerItem = WeatherDetialsStackItem(viewType: .pressure,
+                                                    value: "\(currentWeather.pressure)")
+        let windItemItem = WeatherDetialsStackItem(viewType: .windSpeed,
+                                                   value: "\(currentWeather.windSpeed)")
+        cellViewModels.append(CurrentWeatherDetailsStackCellViewModel(stackItems: [humidityItem,
+                                                                                   barometerItem,
+                                                                                   windItemItem]))
+    }
 }
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
@@ -53,6 +66,7 @@ extension MainScreenViewModel: MainScreenViewModelProtocol {
             switch result {
             case .success(let response):
                 self?.setupWeatherCellViewModel(from: response)
+                self?.setupStackCellViewModel(from: response)
             case .failure(let error):
                 self?.errorHandler?(error)
             }
