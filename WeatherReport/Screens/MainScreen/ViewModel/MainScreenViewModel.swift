@@ -41,14 +41,15 @@ private extension MainScreenViewModel {
     private func setupStackCellViewModel(from response: WeatherResponse) {
         let currentWeather = response.currentWeather
         let humidityItem = WeatherDetialsStackItem(viewType: .humidity,
-                                                   value: "\(currentWeather.humidity)")
+                                                   value: currentWeather.humidity)
         let barometerItem = WeatherDetialsStackItem(viewType: .pressure,
-                                                    value: "\(currentWeather.pressure)")
+                                                    value: currentWeather.pressure)
         let windItemItem = WeatherDetialsStackItem(viewType: .windSpeed,
-                                                   value: "\(currentWeather.windSpeed)")
+                                                   value: currentWeather.windSpeed)
         cellViewModels.append(CurrentWeatherDetailsStackCellViewModel(stackItems: [humidityItem,
                                                                                    barometerItem,
                                                                                    windItemItem]))
+        updateHadler?()
     }
 }
 

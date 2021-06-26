@@ -22,6 +22,8 @@ final class MainViewController: BaseViewController {
                            forCellReuseIdentifier: CurrentLocationCell.identifier)
         tableView.register(CurrentWeatherCell.self,
                            forCellReuseIdentifier: CurrentWeatherCell.identifier)
+        tableView.register(CurrentWeatherDetailsStackCell.self,
+                           forCellReuseIdentifier: CurrentWeatherDetailsStackCell.identifier)
         tableView.delegate = self
         return tableView
     }()

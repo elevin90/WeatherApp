@@ -25,7 +25,8 @@ final class CurrentWeatherCell: BaseTableViewCell {
     private lazy var degreesLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        let font = UIFont.appFont(type: .medium, size: 32)
+        let font = UIFont.appFont(type: .bold, size: 32)
+        label.font = font
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -70,7 +71,7 @@ private extension CurrentWeatherCell {
 extension CurrentWeatherCell: TableCellFetching {
     func fetch(with viewModel: CellViewModeling) {
         guard let viewModel = viewModel as? CurrentWeatherCellViewModel else { return }
-        degreesLabel.text = "\(viewModel.temperature)".appending("°")
+        degreesLabel.text = viewModel.temperatureString
         conditionsLabel.text = viewModel.conditions
     }
 }

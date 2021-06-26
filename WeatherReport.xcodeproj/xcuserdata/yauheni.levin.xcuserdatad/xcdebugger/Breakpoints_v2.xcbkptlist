@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DADE76C8-784B-455A-9941-70514A6698B6"
+            uuid = "01EE3D24-759D-4C06-A780-60A2E7AD7C8D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeatherReport/Screens/MainScreen/ViewModel/Buidler/WeatherCellViewModelBuilder.swift"
+            filePath = "WeatherReport/Screens/MainScreen/Views/Cells/StackCell/DetailsStackItemView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "createWeatherDetails()"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "fetchWith(item:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BA362B4B-6848-41BF-9CB3-C19FDB521062"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherReport/Screens/MainScreen/ViewModel/CellViewModels/CurrentWeatherDetailsStackCellViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "init(viewType:value:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

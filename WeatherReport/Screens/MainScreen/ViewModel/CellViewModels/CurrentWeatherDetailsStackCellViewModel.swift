@@ -26,6 +26,20 @@ struct WeatherDetialsStackItem {
     }
     let viewType: ViewType
     let value: String
+    
+    init(viewType: ViewType, value: Double) {
+        self.viewType = viewType
+        switch viewType {
+        case .humidity:
+            self.value = String(format:  "\(Int(value))", value).appending("%")
+        case .pressure:
+            self.value = String(format: "\(Int(value))".appending("hPa".localized()), value)
+        case .windSpeed:
+            self.value = value < 1
+                ? String(format: "%.2f".appending("m/s".localized()), value)
+                : String(format: "\(Int(value))".appending("m/s".localized()), value)
+        }
+    }
 }
 
 protocol CurrentWeatherDetailsStackCellViewModelProtocol: CellViewModeling {

@@ -13,6 +13,7 @@
 		6045BCB22646A320005F776F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6045BCB12646A320005F776F /* String.swift */; };
 		605B38D326850F6700F86259 /* CurrentWeatherDetailsStackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605B38D226850F6700F86259 /* CurrentWeatherDetailsStackCell.swift */; };
 		605B38D5268511B700F86259 /* CurrentWeatherDetailsStackCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 605B38D4268511B700F86259 /* CurrentWeatherDetailsStackCellViewModel.swift */; };
+		607223192686F406008B060C /* DetailsStackItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607223182686F406008B060C /* DetailsStackItemView.swift */; };
 		6076E2A0264DADE400D49C23 /* CurrentWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076E29F264DADE400D49C23 /* CurrentWeatherCell.swift */; };
 		6076E2A3264DB01300D49C23 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076E2A2264DB01300D49C23 /* BaseTableViewCell.swift */; };
 		6076E2B2264DB79500D49C23 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6076E2A5264DB79500D49C23 /* Roboto-Medium.ttf */; };
@@ -78,6 +79,7 @@
 		6045BCB12646A320005F776F /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		605B38D226850F6700F86259 /* CurrentWeatherDetailsStackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherDetailsStackCell.swift; sourceTree = "<group>"; };
 		605B38D4268511B700F86259 /* CurrentWeatherDetailsStackCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherDetailsStackCellViewModel.swift; sourceTree = "<group>"; };
+		607223182686F406008B060C /* DetailsStackItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsStackItemView.swift; sourceTree = "<group>"; };
 		6076E29F264DADE400D49C23 /* CurrentWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherCell.swift; sourceTree = "<group>"; };
 		6076E2A2264DB01300D49C23 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		6076E2A5264DB79500D49C23 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -190,6 +192,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		607223152686F3C9008B060C /* StackCell */ = {
+			isa = PBXGroup;
+			children = (
+				605B38D226850F6700F86259 /* CurrentWeatherDetailsStackCell.swift */,
+				607223182686F406008B060C /* DetailsStackItemView.swift */,
+			);
+			path = StackCell;
+			sourceTree = "<group>";
+		};
 		6076E29D264DADC500D49C23 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,8 +212,8 @@
 		6076E29E264DADD100D49C23 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				607223152686F3C9008B060C /* StackCell */,
 				6076E29F264DADE400D49C23 /* CurrentWeatherCell.swift */,
-				605B38D226850F6700F86259 /* CurrentWeatherDetailsStackCell.swift */,
 				60AA4E0A264EFC7600A1588A /* CurrentLocationCell.swift */,
 			);
 			path = Cells;
@@ -592,6 +603,7 @@
 				60777FFB2647EA410086B1DA /* UIColor.swift in Sources */,
 				60A9E510263DE230005C2D70 /* OneCallRequest.swift in Sources */,
 				60A9E515263DEF6A005C2D70 /* WeatherRequest.swift in Sources */,
+				607223192686F406008B060C /* DetailsStackItemView.swift in Sources */,
 				60AA4E0D264EFDF000A1588A /* CurrentLocationViewModel.swift in Sources */,
 				60AA4E0F264F0ED800A1588A /* UITableView.swift in Sources */,
 				60A9E51B263E83A8005C2D70 /* WeatherService.swift in Sources */,
