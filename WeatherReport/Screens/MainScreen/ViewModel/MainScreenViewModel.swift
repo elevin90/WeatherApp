@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 protocol MainScreenViewModelProtocol: AnyObject {
     var cellViewModels: [CellViewModeling] { get }
@@ -35,7 +36,6 @@ private extension MainScreenViewModel {
         let weatherCellViewModel = WeatherCellViewModelBuilder(currentWeather:
                                                                 currentWeather).create()
         cellViewModels.append(weatherCellViewModel)
-        updateHadler?()
     }
     
     private func setupStackCellViewModel(from response: WeatherResponse) {
@@ -49,7 +49,11 @@ private extension MainScreenViewModel {
         cellViewModels.append(CurrentWeatherDetailsStackCellViewModel(stackItems: [humidityItem,
                                                                                    barometerItem,
                                                                                    windItemItem]))
-        updateHadler?()
+    }
+    
+    private func setupSunriseSunsetViewModel(from response: WeatherResponse) {
+        let weatherCellViewModel = SunViewModelBuilder(currentWeather: response.currentWeather).create()
+        cellViewModels.append(weatherCellViewModel)
     }
 }
 
@@ -68,6 +72,8 @@ extension MainScreenViewModel: MainScreenViewModelProtocol {
             case .success(let response):
                 self?.setupWeatherCellViewModel(from: response)
                 self?.setupStackCellViewModel(from: response)
+                self?.setupSunriseSunsetViewModel(from: response)
+                self?.updateHadler?()
             case .failure(let error):
                 self?.errorHandler?(error)
             }

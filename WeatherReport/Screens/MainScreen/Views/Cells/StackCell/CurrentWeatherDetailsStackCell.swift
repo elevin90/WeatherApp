@@ -24,9 +24,9 @@ final class CurrentWeatherDetailsStackCell: BaseTableViewCell {
         addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 32),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
-            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -12)
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -22),
+            stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: 22),
+            stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -22)
         ])
     }
 }

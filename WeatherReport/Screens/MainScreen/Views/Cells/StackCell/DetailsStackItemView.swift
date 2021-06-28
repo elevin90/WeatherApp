@@ -17,7 +17,7 @@ final class DetailsStackItemView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         let textColor = UIColor.white.withAlphaComponent(0.8)
-        let font = UIFont.appFont(type: .regular, size: 12)
+        let font = UIFont.appFont(type: .regular, size: 14)
         label.textColor = textColor
         label.font = font
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -49,8 +49,8 @@ private extension DetailsStackItemView {
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             imageView.leftAnchor.constraint(equalTo: leftAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 20),
-            imageView.heightAnchor.constraint(equalToConstant: 20)
+            imageView.widthAnchor.constraint(equalToConstant: 22),
+            imageView.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
     
@@ -59,7 +59,7 @@ private extension DetailsStackItemView {
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor,
-                                             constant: 12),
+                                             constant: 8),
             titleLabel.rightAnchor.constraint(equalTo: rightAnchor)
         ])
     }

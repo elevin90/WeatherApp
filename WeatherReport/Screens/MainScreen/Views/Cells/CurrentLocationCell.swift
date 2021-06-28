@@ -42,7 +42,7 @@ private extension CurrentLocationCell {
         addSubview(cityLabel)
         NSLayoutConstraint.activate([
             cityLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            cityLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            cityLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22),
             cityLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -50),
         ])
     }
@@ -51,7 +51,7 @@ private extension CurrentLocationCell {
         addSubview(currentDateLabel)
         NSLayoutConstraint.activate([
             currentDateLabel.topAnchor.constraint(equalTo: cityLabel.bottomAnchor, constant: 4),
-            currentDateLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
+            currentDateLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22),
             currentDateLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -50),
             currentDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])

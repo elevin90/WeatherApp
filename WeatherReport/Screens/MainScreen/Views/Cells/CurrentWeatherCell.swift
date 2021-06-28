@@ -53,7 +53,7 @@ private extension CurrentWeatherCell {
         addSubview(degreesLabel)
         NSLayoutConstraint.activate([
             degreesLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            degreesLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12)
+            degreesLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22)
         ])
     }
     
@@ -61,9 +61,9 @@ private extension CurrentWeatherCell {
         addSubview(conditionsLabel)
         NSLayoutConstraint.activate([
             conditionsLabel.topAnchor.constraint(equalTo: degreesLabel.bottomAnchor, constant: 4),
-            conditionsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 12),
-            conditionsLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
-            conditionsLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -12)
+            conditionsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            conditionsLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22),
+            conditionsLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -22)
         ])
     }
 }
