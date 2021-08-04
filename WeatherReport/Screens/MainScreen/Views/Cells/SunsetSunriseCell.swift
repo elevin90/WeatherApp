@@ -61,6 +61,27 @@ class SunsetSunriseCell: BaseTableViewCell {
             $0.cornerRadius = cornerRadius
         }
     }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        guard let context = UIGraphicsGetCurrentContext()
+        else {
+            return
+        }
+        let backgroundMountains = CGMutablePath()
+        let startPoint = CGPoint(x: -5, y: 45)
+        backgroundMountains.move(to: startPoint, transform: .identity)
+        let finalPoint = CGPoint(x: UIScreen.main.bounds.width,
+                                 y: 88)
+        backgroundMountains.addCurve(to: finalPoint,
+                                     control1: CGPoint(x: 30,
+                                                       y: 34),
+                                     control2: CGPoint(x: UIScreen.main.bounds.width / 2,
+                                                       y: 64))
+        context.addPath(backgroundMountains)
+        context.setStrokeColor(UIColor.white.withAlphaComponent(0.3).cgColor)
+        context.strokePath()
+    }
 }
 
 private extension SunsetSunriseCell {
@@ -68,7 +89,7 @@ private extension SunsetSunriseCell {
         addSubview(sunsetView)
         NSLayoutConstraint.activate([
             sunsetView.topAnchor.constraint(equalTo: topAnchor, constant: 42),
-            sunsetView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+            sunsetView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -26),
             sunsetView.rightAnchor.constraint(equalTo: rightAnchor, constant: -22),
             sunsetView.heightAnchor.constraint(equalToConstant: 20),
             sunsetView.widthAnchor.constraint(equalToConstant: 20)
@@ -89,17 +110,17 @@ private extension SunsetSunriseCell {
         addSubview(sunriseLabel)
         NSLayoutConstraint.activate([
             sunriseLabel.centerYAnchor.constraint(equalTo: sunriseView.centerYAnchor),
-        
+            
             sunriseLabel.leftAnchor.constraint(equalTo: sunriseView.rightAnchor,
-                                             constant: 8)
+                                               constant: 8)
         ])
         
         addSubview(sunsetLabel)
         NSLayoutConstraint.activate([
             sunsetLabel.centerYAnchor.constraint(equalTo: sunsetView.centerYAnchor),
-        
+            
             sunsetLabel.rightAnchor.constraint(equalTo: sunsetView.leftAnchor,
-                                             constant: -8)
+                                               constant: -8)
         ])
     }
 }
@@ -112,8 +133,5 @@ extension SunsetSunriseCell: TableCellFetching {
         sunriseLabel.text = viewModel.sunriseItem.time
         sunriseView.colors = viewModel.sunriseItem.gradientColors
         sunsetView.colors = viewModel.sunsetItem.gradientColors
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 100, y: 20))
-        path.addLine(to: CGPoint(x: 150, y: 50))
     }
 }
