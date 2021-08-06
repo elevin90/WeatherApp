@@ -25,18 +25,20 @@ class SunViewModelBuilder: SunCellViewModelBuilderProtocol  {
     }
     
     private func createSunriseItem() -> SunTimeItem {
-        let gradientColors = [UIColor(red: 0.91, green: 0.67, blue: 0.58, alpha: 1.00),
-                              UIColor(red: 0.94, green: 0.42, blue: 0.63, alpha: 1.00)]
-        return SunTimeItem(time: DateConverter().hourMinutedateStringFrom(interval: currentWeather.sunriseTime),
+        let gradientColors = [UIColor.sunriseStartColor, UIColor.sunriseFinishColor]
+        let time = getSunItemTimeStringFrom(interval: currentWeather.sunriseTime)
+        return SunTimeItem(time: time,
                            gradientColors: gradientColors)
     }
     
     private func createSunsetItem() -> SunTimeItem {
-        let gradientColors = [UIColor(red: 0.90, green: 0.87, blue: 0.76, alpha: 1.00),
-                              UIColor(red: 0.97, green: 0.87, blue: 0.63, alpha: 1.00)]
-        return SunTimeItem(time: DateConverter().hourMinutedateStringFrom(interval: currentWeather.sunsetTime),
+        let gradientColors = [UIColor.sunsetStartColor, UIColor.sunsetFinishColor]
+        let time = getSunItemTimeStringFrom(interval: currentWeather.sunsetTime)
+        return SunTimeItem(time: time,
                            gradientColors: gradientColors)
     }
+    
+    private func getSunItemTimeStringFrom(interval: Int) -> String {
+        return DateConverter().hourMinutedateStringFrom(interval: interval)
+    }
 }
-
-

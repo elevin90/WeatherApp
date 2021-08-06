@@ -27,6 +27,9 @@ class DateConverter {
         let comp = calendar.dateComponents([.hour, .minute], from: localDate)
         let hour = comp.hour ?? 0
         let minute = comp.minute ?? 0
+        if minute < 10 {
+            return "\(hour):0\(minute)"
+        }
         return "\(hour):\(minute)"
     }
     
