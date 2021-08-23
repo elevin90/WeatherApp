@@ -1,9 +1,5 @@
-//
 //  CurrentLocationCell.swift
-//  WeatherReport
-//
 //  Created by AP Yauheni Levin on 14.05.21.
-//
 
 import UIKit
 

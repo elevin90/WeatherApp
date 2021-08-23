@@ -53,5 +53,4 @@ final class CurrentWeatherDetailsStackCellViewModel: CellViewModeling {
     init(stackItems: [WeatherDetialsStackItem]) {
         self.stackItems = stackItems
     }
-    
 }

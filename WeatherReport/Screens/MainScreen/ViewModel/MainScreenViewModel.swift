@@ -55,6 +55,11 @@ private extension MainScreenViewModel {
         let weatherCellViewModel = SunViewModelBuilder(currentWeather: response.currentWeather).create()
         cellViewModels.append(weatherCellViewModel)
     }
+    
+    private func setupHourlyWeatherCellViewModel(from response: WeatherResponse) {
+        let hourlyWeatherCellViewModel =  HourlyWeatherCellViewModel(hourlyWeather: response.hourly)
+        cellViewModels.append(hourlyWeatherCellViewModel)
+    }
 }
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
@@ -73,6 +78,7 @@ extension MainScreenViewModel: MainScreenViewModelProtocol {
                 self?.setupWeatherCellViewModel(from: response)
                 self?.setupStackCellViewModel(from: response)
                 self?.setupSunriseSunsetViewModel(from: response)
+                self?.setupHourlyWeatherCellViewModel(from: response)
                 self?.updateHadler?()
             case .failure(let error):
                 self?.errorHandler?(error)

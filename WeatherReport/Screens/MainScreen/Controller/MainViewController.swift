@@ -26,6 +26,8 @@ final class MainViewController: BaseViewController {
                            forCellReuseIdentifier: CurrentWeatherDetailsStackCell.identifier)
         tableView.register(SunsetSunriseCell.self,
                            forCellReuseIdentifier: SunsetSunriseCell.identifier)
+        tableView.register(HourlyWeatherCell.self,
+                           forCellReuseIdentifier: HourlyWeatherCell.identifier)
         tableView.delegate = self
         return tableView
     }()
@@ -75,5 +77,18 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+
+class DynamicHeightCollectionView: UICollectionView {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if bounds.size != intrinsicContentSize {
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+    override var intrinsicContentSize: CGSize {
+        return collectionViewLayout.collectionViewContentSize
     }
 }
