@@ -9,6 +9,10 @@ import UIKit
 
 final class MainViewController: BaseViewController {
 
+    private struct Constants {
+        static let hourlyWeatherHeight: CGFloat = 118
+    }
+    
     private let viewModel: MainScreenViewModelProtocol = MainScreenViewModel()
     
     private lazy var tableView: UITableView = {
@@ -70,6 +74,7 @@ extension MainViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: model.reusableIdentifier,
                                                  for: indexPath) as? TableCellFetching
         cell?.fetch(with: model)
+        cell?.selectionStyle = .none
         return cell ?? UITableViewCell()
     }
 }
@@ -78,17 +83,11 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-}
-
-
-class DynamicHeightCollectionView: UICollectionView {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if bounds.size != intrinsicContentSize {
-            self.invalidateIntrinsicContentSize()
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == viewModel.cellViewModels.count - 1 {
+            return Constants.hourlyWeatherHeight
         }
-    }
-    override var intrinsicContentSize: CGSize {
-        return collectionViewLayout.collectionViewContentSize
+        return UITableView.automaticDimension
     }
 }

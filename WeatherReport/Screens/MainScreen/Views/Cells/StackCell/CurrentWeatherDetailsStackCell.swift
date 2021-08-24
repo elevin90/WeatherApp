@@ -11,7 +11,7 @@ final class CurrentWeatherDetailsStackCell: BaseTableViewCell {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [])
         stackView.axis = .horizontal
-        stackView.isUserInteractionEnabled = false
+        stackView.isUserInteractionEnabled = true
         stackView.alignment = .fill
         stackView.distribution = .equalCentering
         stackView.translatesAutoresizingMaskIntoConstraints = false

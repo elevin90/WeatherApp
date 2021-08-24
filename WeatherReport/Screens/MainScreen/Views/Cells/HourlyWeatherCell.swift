@@ -26,16 +26,14 @@ class HourlyWeatherCell: BaseTableViewCell {
     private lazy var collectionLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.estimatedItemSize = CGSize(width: 1, height: 1)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.itemSize = CGSize(width: 60, height: 70)
         return layout
     }()
     
     private lazy var collectionView: UICollectionView = {
-        let collectionView = DynamicHeightCollectionView(frame: .zero,
-                                              collectionViewLayout: collectionLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.isUserInteractionEnabled = true
         collectionView.dataSource = self
         collectionView.register(HourlyCollectionCell.self,
                                 forCellWithReuseIdentifier: HourlyCollectionCell.cellId)
@@ -49,17 +47,6 @@ class HourlyWeatherCell: BaseTableViewCell {
         setupTodayLabel()
         setupCollectionView()
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let currentSize = bounds.size
-//        guard currentSize != oldSize else {
-//            return
-//        }
-//        oldSize = currentSize
-        collectionLayout.invalidateLayout()
-        collectionView.layoutIfNeeded()
-    }
 }
 
 private extension HourlyWeatherCell {
@@ -72,13 +59,12 @@ private extension HourlyWeatherCell {
     }
     
     private func setupCollectionView() {
-        addSubview(collectionView)
+        contentView.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: todayLabel.bottomAnchor, constant: 6),
-            collectionView.leftAnchor.constraint(equalTo: leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 80),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            collectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         backgroundView?.backgroundColor = .clear
         backgroundColor = .clear
@@ -101,6 +87,10 @@ extension HourlyWeatherCell: UICollectionViewDataSource {
         return viewModel?.hourlyForecastInfo.count ?? 0
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView
@@ -112,9 +102,3 @@ extension HourlyWeatherCell: UICollectionViewDataSource {
         return cell
     }
 }
-
-//extension HourlyWeatherCell: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 140, height: 142)
-//    }
-//}

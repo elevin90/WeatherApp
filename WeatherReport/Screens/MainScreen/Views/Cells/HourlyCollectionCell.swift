@@ -45,8 +45,9 @@ class HourlyCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTimeLabel()
-       // setupImage()
+        setupImage()
         setupTemperatureLabel()
+        contentView.isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) {
@@ -81,20 +82,19 @@ private extension HourlyCollectionCell {
         addSubview(weatherImageView)
         NSLayoutConstraint.activate([
             weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 4),
-            weatherImageView.leftAnchor.constraint(equalTo: timeLabel.leftAnchor)
-//            weatherImageView.widthAnchor.constraint(equalToConstant: 24),
-//            weatherImageView.heightAnchor.constraint(equalToConstant: 24)
+            weatherImageView.leftAnchor.constraint(equalTo: timeLabel.leftAnchor),
+            weatherImageView.widthAnchor.constraint(equalToConstant: 24),
+            weatherImageView.heightAnchor.constraint(equalToConstant: 24)
         ])
     }
     
     private func setupTemperatureLabel() {
         addSubview(temperatureLabel)
         NSLayoutConstraint.activate([
-            temperatureLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor,
+            temperatureLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor,
                                                   constant: 4),
             temperatureLabel.leftAnchor.constraint(equalTo: timeLabel.leftAnchor),
-            temperatureLabel.rightAnchor.constraint(equalTo: timeLabel.rightAnchor),
-            temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            temperatureLabel.rightAnchor.constraint(equalTo: timeLabel.rightAnchor)
         ])
     }
 }
