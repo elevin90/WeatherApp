@@ -26,7 +26,7 @@ class HourlyWeatherCell: BaseTableViewCell {
     private lazy var collectionLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 60, height: 70)
+        layout.itemSize = CGSize(width: 60, height: 78)
         return layout
     }()
     

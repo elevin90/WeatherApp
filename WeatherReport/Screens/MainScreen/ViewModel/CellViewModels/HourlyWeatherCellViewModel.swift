@@ -13,6 +13,15 @@ protocol HourlyWeatherCellViewModelProtocol {
     
 }
 
+enum WeatherCondition: String {
+    case thunderstorm
+    case drizzle
+    case rain
+    case snow
+    case clear
+    case clouds
+}
+
 struct HourlyForecastCellInfo {
     let time: String
     let temperature: String
@@ -29,9 +38,14 @@ class HourlyWeatherCellViewModel: CellViewModeling, HourlyWeatherCellViewModelPr
         hourlyWeather.forEach{
             let time = DateConverter().hourMinutedateStringFrom(interval: $0.dt)
             let temperature = String(Int($0.temperature))
+            var weatherState = ""
+            if let firstWeather = $0.weather.first,
+               let state = WeatherCondition(rawValue: firstWeather.state.lowercased()) {
+                weatherState = state.rawValue
+            }
             let hourlyInfo = HourlyForecastCellInfo(time: time,
                                                        temperature: temperature,
-                                                       imageTitle: "")
+                                                       imageTitle: weatherState)
             
             hourlyForecastInfoTemp.append(hourlyInfo)
         }

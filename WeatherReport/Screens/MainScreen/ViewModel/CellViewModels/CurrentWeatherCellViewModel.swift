@@ -37,14 +37,7 @@ final class CurrentWeatherCellViewModel: CellViewModeling {
     
     var temperatureString: String {
         let temperature = Int(weather.temperature)
-        if temperature > 0 {
-            return "+ \(temperature)".appending("°")
-        } else if temperature < 0 {
-            return "- \(temperature)".appending("°")
-        } else {
-            return "\(temperature)".appending("°")
-        }
-        
+        return "\(temperature)".appending("°")
     }
     
     init(weather: WeatherDetails, additional: WeatherAdditionalDetials) {

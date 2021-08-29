@@ -25,6 +25,7 @@ class HourlyCollectionCell: UICollectionViewCell {
         let font = UIFont.appFont(type: .regular, size: 16)
         label.textColor = .white
         label.font = font
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -32,7 +33,6 @@ class HourlyCollectionCell: UICollectionViewCell {
     private lazy var weatherImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.backgroundColor = .green
         return imageView
     }()
     
@@ -57,7 +57,7 @@ class HourlyCollectionCell: UICollectionViewCell {
     func fetch(info: HourlyForecastCellInfo) {
         timeLabel.text = info.time
         temperatureLabel.text = info.temperature
-        weatherImageView.backgroundColor = .green
+        weatherImageView.image = UIImage(named: info.imageTitle)
     }
 }
 
@@ -73,18 +73,15 @@ private extension HourlyCollectionCell {
         addSubview(timeLabel)
         NSLayoutConstraint.activate([
             timeLabel.topAnchor.constraint(equalTo: topAnchor),
-            timeLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 22),
-            timeLabel.rightAnchor.constraint(equalTo: rightAnchor)
+            timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     
     private func setupImage() {
         addSubview(weatherImageView)
         NSLayoutConstraint.activate([
-            weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 4),
-            weatherImageView.leftAnchor.constraint(equalTo: timeLabel.leftAnchor),
-            weatherImageView.widthAnchor.constraint(equalToConstant: 24),
-            weatherImageView.heightAnchor.constraint(equalToConstant: 24)
+            weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8),
+            weatherImageView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
     
@@ -92,9 +89,9 @@ private extension HourlyCollectionCell {
         addSubview(temperatureLabel)
         NSLayoutConstraint.activate([
             temperatureLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor,
-                                                  constant: 4),
-            temperatureLabel.leftAnchor.constraint(equalTo: timeLabel.leftAnchor),
-            temperatureLabel.rightAnchor.constraint(equalTo: timeLabel.rightAnchor)
+                                                  constant: 8),
+            temperatureLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            temperatureLabel.rightAnchor.constraint(equalTo: rightAnchor)
         ])
     }
 }
