@@ -18,10 +18,10 @@ enum RequestError: Error {
 }
 
 class WeatherRequest {
-    private let baseURL = "https://api.openweathermap.org/data/2.5/"
     private let timeInterval: Double = 30
     let method: APIMethod
     let endPoint: String
+        
     private var task: URLSessionDataTask?
     
     init(endPoint: String, method: APIMethod) {
@@ -66,3 +66,4 @@ extension WeatherRequest {
         return query
     }
 }
+

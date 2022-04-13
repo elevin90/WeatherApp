@@ -9,11 +9,12 @@ import Foundation
 import CoreLocation
 
 typealias OneCallWeatherHandler = (Result<WeatherResponse, Error>) -> Void
+typealias WeeklyWeatherHandler = (Result<WeeklyWeatherResponse, Error>) -> Void
 
 class WeatherService {
-    private let request: OneCallRequest
+    private let request: Requestable
     
-    init(request: OneCallRequest) {
+    init(request: Requestable) {
         self.request = request
     }
     
@@ -31,6 +32,29 @@ class WeatherService {
             guard let data = data else { return }
             do {
                 let weather = try JSONDecoder().decode(WeatherResponse.self, from: data)
+                completion(.success(weather))
+            } catch {
+                debugPrint(error.localizedDescription)
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+
+    func getWeeklyWeather(completion: @escaping WeeklyWeatherHandler) {
+        guard let request = request.request else {
+            completion(.failure(RequestError.invalidURL))
+            return
+        }
+        let urlSession = URLSession.shared
+        urlSession.dataTask(with: request) {data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else { return }
+            do {
+                let weather = try JSONDecoder().decode(WeeklyWeatherResponse.self,
+                                                       from: data)
                 completion(.success(weather))
             } catch {
                 debugPrint(error.localizedDescription)

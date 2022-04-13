@@ -1,18 +1,15 @@
 //
-//  OneCallRequest.swift
+//  WeeklyWeatherRequest.swift
 //  WeatherReport
 //
-//  Created by AP Yauheni Levin on 1.05.21.
+//  Created by AP Yauheni Levin on 23.01.22.
 //
 
 import Foundation
-import CoreLocation
 
-protocol Requestable {
-    var request: URLRequest? { get }
-}
-
-final class OneCallRequest: WeatherRequest, Requestable {
+final class WeeklyWeatherRequest: WeatherRequest, Requestable {
+    private let location: Location
+    
     lazy var request: URLRequest? = {
         do {
             var request = try prepareURLRequest()
@@ -25,27 +22,22 @@ final class OneCallRequest: WeatherRequest, Requestable {
         }
     }()
     
-    private let location: Location
-    
     init(location: Location) {
         self.location = location
-        let endPoint = "/data/2.5/onecall"
-        super.init(endPoint: endPoint,
-                   method: .get)
+        let endPoint = "/data/2.5/forecast/daily"
+        super.init(endPoint: endPoint, method: .get)
     }
     
     override func prepareURLComponents() -> URLComponents {
-        var urlComponents = super.prepareURLComponents()
+        var baseURLComponents = super.prepareURLComponents()
         let locale = Locale.current
-        urlComponents.queryItems = [
+        baseURLComponents.queryItems = [
             URLQueryItem(name: "lat", value: location.latitudeString),
             URLQueryItem(name: "lon", value: location.longtitudeString),
-            URLQueryItem(name: "exclude", value: "daily,minutely"),
+            URLQueryItem(name: "cnt", value: "10"),
             URLQueryItem(name: "units", value: locale.usesMetricSystem ? "metric" : "imperial"),
-            URLQueryItem(name: "lang", value: locale.languageCode),
-            URLQueryItem(name: "cnt", value: "3"),
-            URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
+            URLQueryItem(name: "lang", value: locale.languageCode)
         ]
-        return urlComponents
+        return baseURLComponents
     }
 }
