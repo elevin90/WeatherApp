@@ -5,6 +5,16 @@ import UIKit
 
 protocol TableCellFetching: UITableViewCell {
     func fetch(with viewModel: CellViewModeling)
+    func fetch(with viewModel: CellViewModeling) async
+}
+
+extension TableCellFetching {
+    func fetch(with viewModel: CellViewModeling) async {
+        
+    }
+    func fetch(with viewModel: CellViewModeling) {
+        
+    }
 }
 
 final class CurrentLocationCell: BaseTableViewCell {

@@ -15,8 +15,8 @@ class HourlyWeatherCell: BaseTableViewCell {
     
     private lazy var todayLabel: UILabel = {
         let label = UILabel()
-        let textColor = UIColor.white.withAlphaComponent(0.8)
-        let font = UIFont.appFont(type: .regular, size: 14)
+        let textColor = UIColor.white.withAlphaComponent(0.5)
+        let font = UIFont.appFont(type: .medium, size: 14)
         label.textColor = textColor
         label.font = font
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -26,6 +26,7 @@ class HourlyWeatherCell: BaseTableViewCell {
     private lazy var collectionLayout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+        layout.sectionInset = .init(top: 2, left: 8, bottom: 2, right: 2)
         layout.itemSize = CGSize(width: 60, height: 78)
         return layout
     }()

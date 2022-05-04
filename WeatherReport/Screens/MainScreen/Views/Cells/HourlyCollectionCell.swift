@@ -22,7 +22,7 @@ class HourlyCollectionCell: UICollectionViewCell {
     
     private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        let font = UIFont.appFont(type: .regular, size: 16)
+        let font = UIFont.appFont(type: .medium, size: 16)
         label.textColor = .white
         label.font = font
         label.textAlignment = .center
@@ -56,7 +56,7 @@ class HourlyCollectionCell: UICollectionViewCell {
     
     func fetch(info: HourlyForecastCellInfo) {
         timeLabel.text = info.time
-        temperatureLabel.text = info.temperature
+        temperatureLabel.text = info.temperature.appending("º")
         weatherImageView.image = UIImage(named: info.imageTitle)
     }
 }
@@ -72,7 +72,7 @@ private extension HourlyCollectionCell {
     private func setupTimeLabel() {
         addSubview(timeLabel)
         NSLayoutConstraint.activate([
-            timeLabel.topAnchor.constraint(equalTo: topAnchor),
+            timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
             timeLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -80,7 +80,7 @@ private extension HourlyCollectionCell {
     private func setupImage() {
         addSubview(weatherImageView)
         NSLayoutConstraint.activate([
-            weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8),
+            weatherImageView.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 12),
             weatherImageView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -89,7 +89,7 @@ private extension HourlyCollectionCell {
         addSubview(temperatureLabel)
         NSLayoutConstraint.activate([
             temperatureLabel.topAnchor.constraint(equalTo: weatherImageView.bottomAnchor,
-                                                  constant: 8),
+                                                  constant: 10),
             temperatureLabel.leftAnchor.constraint(equalTo: leftAnchor),
             temperatureLabel.rightAnchor.constraint(equalTo: rightAnchor)
         ])

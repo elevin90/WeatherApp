@@ -8,8 +8,13 @@
 import Foundation
 import CoreLocation
 
+@frozen enum WeatherServiceError: Swift.Error {
+    case wrongURL
+    case invalidStatusCode
+    case parsingError
+}
+
 typealias OneCallWeatherHandler = (Result<WeatherResponse, Error>) -> Void
-typealias WeeklyWeatherHandler = (Result<WeeklyWeatherResponse, Error>) -> Void
 
 class WeatherService {
     private let request: Requestable
@@ -40,26 +45,20 @@ class WeatherService {
         }.resume()
     }
 
-    func getWeeklyWeather(completion: @escaping WeeklyWeatherHandler) {
+    func getWeeklyWeather() async throws -> WeeklyWeatherResponse {
         guard let request = request.request else {
-            completion(.failure(RequestError.invalidURL))
-            return
+            throw WeatherServiceError.wrongURL
         }
         let urlSession = URLSession.shared
-        urlSession.dataTask(with: request) {data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else { return }
-            do {
-                let weather = try JSONDecoder().decode(WeeklyWeatherResponse.self,
-                                                       from: data)
-                completion(.success(weather))
-            } catch {
-                debugPrint(error.localizedDescription)
-                completion(.failure(error))
-            }
-        }.resume()
+        let (data, response) = try await urlSession.data(for: request)
+        if let response = response as? HTTPURLResponse, response.statusCode != 200 {
+            throw WeatherServiceError.invalidStatusCode
+        }
+        do  {
+            let weather = try JSONDecoder().decode(WeeklyWeatherResponse.self, from: data)
+            return weather
+        } catch {
+            throw WeatherServiceError.parsingError
+        }
     }
 }
