@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 
+
 @frozen enum WeatherServiceError: Swift.Error {
     case wrongURL
     case invalidStatusCode
@@ -17,13 +18,14 @@ import CoreLocation
 typealias OneCallWeatherHandler = (Result<WeatherResponse, Error>) -> Void
 
 class WeatherService {
-    private let request: Requestable
+    private let location: Location
     
-    init(request: Requestable) {
-        self.request = request
+    init(location: Location) {
+        self.location = location
     }
     
     func getOneCallWeather(completion: @escaping OneCallWeatherHandler) {
+        let request: Requestable = OneCallRequest(location: location)
         guard let request = request.request else {
             completion(.failure(RequestError.invalidURL))
             return
@@ -46,6 +48,7 @@ class WeatherService {
     }
 
     func getWeeklyWeather() async throws -> WeeklyWeatherResponse {
+        let request: Requestable = WeeklyWeatherRequest(location: location)
         guard let request = request.request else {
             throw WeatherServiceError.wrongURL
         }

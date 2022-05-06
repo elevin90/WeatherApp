@@ -8,7 +8,6 @@
 import UIKit
 
 class HourlyCollectionCell: UICollectionViewCell {
-    
     static let cellId = "HourlyCollectionCell"
     
     private lazy var timeLabel: UILabel = {

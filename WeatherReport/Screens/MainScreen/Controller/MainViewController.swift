@@ -21,6 +21,7 @@ final class MainViewController: BaseViewController {
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 120
         tableView.separatorStyle = .none
         tableView.register(CurrentLocationCell.self,
                            forCellReuseIdentifier: CurrentLocationCell.identifier)
@@ -32,6 +33,8 @@ final class MainViewController: BaseViewController {
                            forCellReuseIdentifier: SunsetSunriseCell.identifier)
         tableView.register(HourlyWeatherCell.self,
                            forCellReuseIdentifier: HourlyWeatherCell.identifier)
+        tableView.register(WeeklyTableCell.self,
+                           forCellReuseIdentifier: WeeklyTableCell.identifier)
         tableView.delegate = self
         return tableView
     }()
@@ -75,6 +78,9 @@ extension MainViewController: UITableViewDataSource {
                                                  for: indexPath) as? TableCellFetching
         cell?.fetch(with: model)
         cell?.selectionStyle = .none
+        (cell as? WeeklyTableCell)?.updateHandler = {[weak self] in
+            self?.tableView.reloadData()
+        }
         return cell ?? UITableViewCell()
     }
 }
@@ -85,9 +91,27 @@ extension MainViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == viewModel.cellViewModels.count - 1 {
+        if indexPath.row == viewModel.cellViewModels.count - 2 {
             return Constants.hourlyWeatherHeight
         }
         return UITableView.automaticDimension
+    }
+}
+
+class DynamicSizeTableView: UITableView {
+    override var intrinsicContentSize: CGSize {
+       self.layoutIfNeeded()
+       return self.contentSize
+     }
+
+     override var contentSize: CGSize {
+       didSet{
+         self.invalidateIntrinsicContentSize()
+       }
+     }
+    
+    override func reloadData() {
+        super.reloadData()
+        self.invalidateIntrinsicContentSize()
     }
 }

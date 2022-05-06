@@ -60,6 +60,12 @@ private extension MainScreenViewModel {
         let hourlyWeatherCellViewModel =  HourlyWeatherCellViewModel(hourlyWeather: response.hourly)
         cellViewModels.append(hourlyWeatherCellViewModel)
     }
+    
+    private func setupWeeklyWeatherCellViewModel() {
+        guard let service = weatherService else { return }
+        let weeklyCellViewModel = WeeklyTableCellViewModel(service: service)
+        cellViewModels.append(weeklyCellViewModel)
+    }
 }
 
 extension MainScreenViewModel: MainScreenViewModelProtocol {
@@ -71,7 +77,7 @@ extension MainScreenViewModel: MainScreenViewModelProtocol {
     }
     
     private func fetchOneCallWeather(location: Location, handler: @escaping OneCallWeatherHandler) {
-        weatherService = WeatherService(request: OneCallRequest(location: location))
+        weatherService = WeatherService(location: location)
         weatherService?.getOneCallWeather() {[weak self] result in
             switch result {
             case .success(let response):
@@ -79,6 +85,7 @@ extension MainScreenViewModel: MainScreenViewModelProtocol {
                 self?.setupStackCellViewModel(from: response)
                 self?.setupSunriseSunsetViewModel(from: response)
                 self?.setupHourlyWeatherCellViewModel(from: response)
+                self?.setupWeeklyWeatherCellViewModel()
                 self?.updateHadler?()
             case .failure(let error):
                 self?.errorHandler?(error)

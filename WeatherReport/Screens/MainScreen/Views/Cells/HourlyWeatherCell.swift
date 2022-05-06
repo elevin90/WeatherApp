@@ -8,7 +8,6 @@
 import UIKit
 
 class HourlyWeatherCell: BaseTableViewCell {
-    
     static let cellId = "HourlyWeatherCell"
     
     private var viewModel: HourlyWeatherCellViewModelProtocol?

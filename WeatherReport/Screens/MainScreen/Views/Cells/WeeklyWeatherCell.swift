@@ -30,6 +30,8 @@ final class WeeklyWeatherCell: BaseTableViewCell {
     
     override func setup() {
         super.setup()
+        backgroundView?.backgroundColor = .clear
+        backgroundColor = .clear
         setupDayLabel()
         setupTemperatureLabel()
     }
@@ -39,6 +41,8 @@ final class WeeklyWeatherCell: BaseTableViewCell {
         NSLayoutConstraint.activate([
             dayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             dayLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+            dayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,
+                                               constant: -(UIScreen.main.bounds.width / 2)),
             dayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12)
         ])
     }

@@ -36,7 +36,8 @@ final class WeeklyWeatherRequest: WeatherRequest, Requestable {
             URLQueryItem(name: "lon", value: location.longtitudeString),
             URLQueryItem(name: "cnt", value: "10"),
             URLQueryItem(name: "units", value: locale.usesMetricSystem ? "metric" : "imperial"),
-            URLQueryItem(name: "lang", value: locale.languageCode)
+            URLQueryItem(name: "lang", value: locale.languageCode),
+            URLQueryItem(name: "appid", value: "dfb922ad45c3a804ffd35ac0a5c94587")
         ]
         return baseURLComponents
     }

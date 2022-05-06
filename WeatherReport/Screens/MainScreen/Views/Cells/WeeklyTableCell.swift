@@ -9,23 +9,33 @@ import UIKit.UITableView
 
 final class WeeklyTableCell: BaseTableViewCell {
     private var viewModel: WeeklyTableCellViewModelProtocol?
-    
+    var updateHandler: (() -> Void)?
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = DynamicSizeTableView()
         tableView.backgroundColor = .clear
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.estimatedRowHeight = 120
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        tableView.register(CurrentLocationCell.self,
-                           forCellReuseIdentifier: CurrentLocationCell.identifier)
+        tableView.register(WeeklyWeatherCell.self,
+                           forCellReuseIdentifier: WeeklyWeatherCell.identifier)
         return tableView
     }()
     
     override func setup() {
         super.setup()
+        addSubview(tableView)
+        backgroundColor = .clear
+        backgroundView?.backgroundColor = .clear
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
-
 }
 
 
@@ -35,7 +45,7 @@ extension WeeklyTableCell: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = viewModel?.reusableIdentifier ?? ""
+        let identifier = WeeklyWeatherCell.identifier
         let dailyWeather = viewModel?.viewModels[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         (cell as? WeeklyWeatherCell)?.fetch(with: dailyWeather)
@@ -43,13 +53,27 @@ extension WeeklyTableCell: UITableViewDataSource {
     }
 }
 
+extension WeeklyTableCell: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+
 extension WeeklyTableCell: TableCellFetching {
-    func fetch(with viewModel: CellViewModeling) async {
+    func fetch(with viewModel: CellViewModeling) {
         guard let viewModel = viewModel as? WeeklyTableCellViewModelProtocol,
               viewModel.viewModels.isEmpty
         else { return }
-        await viewModel.updateWeeklyForecast()
-        tableView.reloadData()
+        self.viewModel = viewModel
+        Task {
+            await viewModel.updateWeeklyForecast()
+            tableView.reloadData()
+            self.updateHandler?()
+        }
     }
 }
 
