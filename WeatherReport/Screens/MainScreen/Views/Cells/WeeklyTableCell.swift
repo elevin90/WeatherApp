@@ -8,7 +8,7 @@
 import UIKit.UITableView
 
 final class WeeklyTableCell: BaseTableViewCell {
-    private var viewModel: WeeklyTableCellViewModelProtocol?
+    private weak var viewModel: WeeklyTableCellViewModelProtocol?
     var updateHandler: (() -> Void)?
     private lazy var tableView: UITableView = {
         let tableView = DynamicSizeTableView()
@@ -30,7 +30,7 @@ final class WeeklyTableCell: BaseTableViewCell {
         backgroundColor = .clear
         backgroundView?.backgroundColor = .clear
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.topAnchor.constraint(equalTo: topAnchor, constant: 22),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
@@ -79,20 +79,26 @@ extension WeeklyTableCell: TableCellFetching {
 
 struct DailyWeatherInfo {
     let day: String
-    let dailyTemperature: Float
-    let nightTemperature: Float
+    let dailyTemperature: Int
+    let nightTemperature: Int
     let imageTitle: String
     
-    init(dailyWeather: DailyWeather) {
-        day = "Day"
-        dailyTemperature = dailyWeather.temperature.dayTemperature
-        nightTemperature = dailyWeather.temperature.nightTemperature
+    init(dailyWeather: DailyWeather, timeZone: TimeZone) {
+        dailyTemperature = Int(dailyWeather.temperature.dayTemperature)
+        nightTemperature = Int(dailyWeather.temperature.nightTemperature)
         imageTitle = ""
+        let timeInterval = TimeInterval(dailyWeather.time)
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.timeZone = timeZone
+        day = dateFormatter.string(from: date).capitalized
     }
 }
 
-protocol WeeklyTableCellViewModelProtocol: CellViewModeling {
+protocol WeeklyTableCellViewModelProtocol: AnyObject, CellViewModeling {
     func updateWeeklyForecast() async
+    var timeZone: TimeZone { get }
     var viewModels: [DailyWeatherInfo] { get }
 }
 
@@ -100,6 +106,7 @@ final class WeeklyTableCellViewModel: WeeklyTableCellViewModelProtocol {
     private let service: WeatherService
     let reusableIdentifier = WeeklyTableCell.identifier
     var viewModels = [DailyWeatherInfo]()
+    var timeZone: TimeZone = .current
     
     init(service: WeatherService) {
         self.service = service
@@ -108,7 +115,9 @@ final class WeeklyTableCellViewModel: WeeklyTableCellViewModelProtocol {
     func updateWeeklyForecast() async {
         do {
             let weeklyWeather = try await service.getWeeklyWeather()
-            viewModels = weeklyWeather.list.lazy.map{DailyWeatherInfo(dailyWeather: $0)}
+            timeZone = TimeZone(secondsFromGMT: Int(weeklyWeather.city.timezone)) ?? .current
+            viewModels = weeklyWeather.list.suffix(from: 1).lazy.map{DailyWeatherInfo(dailyWeather: $0,
+                                                                      timeZone: timeZone)}
         }
         catch {
             switch error as? WeatherServiceError {

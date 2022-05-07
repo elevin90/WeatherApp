@@ -10,7 +10,7 @@ import UIKit
 final class WeeklyWeatherCell: BaseTableViewCell {
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
-        let font = UIFont.appFont(type: .regular, size: 12)
+        let font = UIFont.appFont(type: .medium, size: 16)
         label.textColor = .white
         label.font = font
         label.text = "dayLabel"
@@ -18,10 +18,20 @@ final class WeeklyWeatherCell: BaseTableViewCell {
         return label
     }()
     
-    private lazy var temperatureLabel: UILabel = {
+    private lazy var dayTemperatureLabel: UILabel = {
         let label = UILabel()
-        let font = UIFont.appFont(type: .regular, size: 14)
+        let font = UIFont.appFont(type: .medium, size: 16)
         label.textColor = .white
+        label.font = font
+        label.text = "temperatureLabel"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var nightTemperatureLabel: UILabel = {
+        let label = UILabel()
+        let font = UIFont.appFont(type: .regular, size: 16)
+        label.textColor = UIColor.white.withAlphaComponent(0.5)
         label.font = font
         label.text = "temperatureLabel"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,25 +49,32 @@ final class WeeklyWeatherCell: BaseTableViewCell {
     private func setupDayLabel() {
         addSubview(dayLabel)
         NSLayoutConstraint.activate([
-            dayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6),
-            dayLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+            dayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            dayLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
             dayLabel.trailingAnchor.constraint(equalTo: trailingAnchor,
                                                constant: -(UIScreen.main.bounds.width / 2)),
-            dayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12)
+            dayLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 22)
         ])
     }
     
     private func setupTemperatureLabel() {
-        addSubview(temperatureLabel)
+        addSubview(nightTemperatureLabel)
         NSLayoutConstraint.activate([
-            temperatureLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6),
-            temperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
-            temperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12)
+            nightTemperatureLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6),
+            nightTemperatureLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -6),
+            nightTemperatureLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -22)
+        ])
+        addSubview(dayTemperatureLabel)
+        NSLayoutConstraint.activate([
+            dayTemperatureLabel.centerYAnchor.constraint(equalTo: nightTemperatureLabel.centerYAnchor),
+            dayTemperatureLabel.trailingAnchor.constraint(equalTo: nightTemperatureLabel.leadingAnchor, constant: -12)
         ])
     }
     
     func fetch(with dailyWeather: DailyWeatherInfo?) {
         dayLabel.text = dailyWeather?.day ?? ""
-        temperatureLabel.text = "\(dailyWeather?.dailyTemperature ?? 0)" 
+        dayTemperatureLabel.text = "\(dailyWeather?.dailyTemperature ?? 0)".appending("º")
+        nightTemperatureLabel.text = "\(dailyWeather?.nightTemperature ?? 0)".appending("º")
+        
     }
 }

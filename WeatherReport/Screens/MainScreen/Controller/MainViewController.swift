@@ -79,7 +79,8 @@ extension MainViewController: UITableViewDataSource {
         cell?.fetch(with: model)
         cell?.selectionStyle = .none
         (cell as? WeeklyTableCell)?.updateHandler = {[weak self] in
-            self?.tableView.reloadData()
+            self?.tableView.beginUpdates()
+            self?.tableView.endUpdates()
         }
         return cell ?? UITableViewCell()
     }

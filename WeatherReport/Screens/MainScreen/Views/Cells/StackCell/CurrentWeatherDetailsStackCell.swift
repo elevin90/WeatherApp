@@ -29,6 +29,13 @@ final class CurrentWeatherDetailsStackCell: BaseTableViewCell {
             stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -22)
         ])
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        stackView.arrangedSubviews.forEach {
+            stackView.removeArrangedSubview($0)
+        }
+    }
 }
 
 extension CurrentWeatherDetailsStackCell: TableCellFetching {
