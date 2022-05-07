@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  WeatherReport
+
+  Created by AP Yauheni Levin on 8.05.21.
+  
+*/
+
+"Current" = "Текщая локация";
+"Saved" = "Избранное";
+"Settings" = "Настройки";
+"Today" = "Прогноз на сегодня";
